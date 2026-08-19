@@ -5,7 +5,7 @@ public class PlayerScore : MonoBehaviour
     public int score = 0;
 
     [Header("Level Goal")]
-    public int winScore = 50;
+    public int winScore = 10;
 
     private bool levelWon = false;
 
