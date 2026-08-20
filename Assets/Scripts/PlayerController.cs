@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 3f;
     public float rotationSpeed = 10f;
 
+    public ParticleSystem dustParticles;
+
     private Rigidbody rig;
     private Vector2 moveInput;
     private Transform cameraTransform;
@@ -28,18 +30,15 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Get camera directions
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
 
-        // Ignore camera's vertical angle
         cameraForward.y = 0f;
         cameraRight.y = 0f;
 
         cameraForward.Normalize();
         cameraRight.Normalize();
 
-        // Convert WASD into camera-relative movement
         Vector3 movement =
             cameraForward * moveInput.y +
             cameraRight * moveInput.x;
@@ -48,12 +47,10 @@ public class PlayerController : MonoBehaviour
         {
             movement.Normalize();
 
-            // Move the player
             rig.MovePosition(
                 rig.position + movement * speed * Time.fixedDeltaTime
             );
 
-            // Turn the player toward movement direction
             Quaternion targetRotation =
                 Quaternion.LookRotation(movement);
 
@@ -64,6 +61,20 @@ public class PlayerController : MonoBehaviour
             );
 
             rig.MoveRotation(newRotation);
+
+            // Character is moving
+            if (!dustParticles.isPlaying)
+            {
+                dustParticles.Play();
+            }
+        }
+        else
+        {
+            // Character is stationary
+            if (dustParticles.isPlaying)
+            {
+                dustParticles.Stop();
+            }
         }
     }
 }
