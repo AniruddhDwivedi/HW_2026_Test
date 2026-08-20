@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class CollapsingPlatform : MonoBehaviour
 {
+    AudioManager audioManager;
+
     [Header("Timing")]
     public float minLifetime = 4f;
     public float maxLifetime = 5f;
@@ -63,6 +65,8 @@ public class CollapsingPlatform : MonoBehaviour
 
     private void Start()
     {
+
+        audioManager = FindFirstObjectByType<AudioManager>();
         if (isStartingPlatform)
         {
             // Starting platform is already fully grown.
@@ -72,6 +76,7 @@ public class CollapsingPlatform : MonoBehaviour
         {
             // Every generated platform grows into existence.
             StartCoroutine(GrowPlatform());
+            audioManager.PlayHover();
         }
     }
 
@@ -120,6 +125,8 @@ public class CollapsingPlatform : MonoBehaviour
         float lifetime =
             Random.Range(minLifetime, maxLifetime);
 
+
+        audioManager.PlayClick();
         Destroy(gameObject, lifetime);
     }
 

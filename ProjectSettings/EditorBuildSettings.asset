@@ -6,14 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Worlds/Level0.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Scenes/Worlds/StartScreen.unity
     guid: f59cb0e57cba8784e88d40d6074b73f1
   - enabled: 1
     path: Assets/Scenes/Worlds/LevelMinus1.unity
     guid: 8c332bfbf44be7245820b30fb251f42d
+  - enabled: 1
+    path: Assets/Scenes/Worlds/Level0.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Worlds/LoseScreen.unity
+    guid: 6625da672237d5543bbaf81fb09475aa
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WinScreen.unity
+    guid: 1cfc0419c1efd32488266685b333a7ec
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a059b8b61ac4e604d9aac07cec0e0ccd, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
