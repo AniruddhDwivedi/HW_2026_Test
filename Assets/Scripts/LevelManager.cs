@@ -40,6 +40,12 @@ public class LevelManager : MonoBehaviour
             if (ScoreText != null)
             {
                 ScoreText.text = "Score: " + currScore;
+
+                Debug.Log("UI updated: " + ScoreText.text);
+            }
+            else
+            {
+                Debug.LogError("ScoreText is NULL!");
             }
         }
 

@@ -11,6 +11,9 @@ public class WinScreen : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
         videoPlayer.clip = menuVideo;
         videoPlayer.isLooping = true;
         videoPlayer.waitForFirstFrame = true;
