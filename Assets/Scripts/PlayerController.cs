@@ -62,7 +62,6 @@ public class PlayerController : MonoBehaviour
 
             rig.MoveRotation(newRotation);
 
-            // Character is moving
             if (!dustParticles.isPlaying)
             {
                 dustParticles.Play();
@@ -70,7 +69,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // Character is stationary
             if (dustParticles.isPlaying)
             {
                 dustParticles.Stop();

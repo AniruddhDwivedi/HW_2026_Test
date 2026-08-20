@@ -1,35 +1,47 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
+    public string loseScene;
+    public string winScene;
+
     [Header("Lose Condition")]
     public float loseHeight = -10f;
 
-    [Header("Win UI")]
-    public TMP_Text winText;
+    [Header("Score Tracking")]
+    public TMP_Text ScoreText;
 
+    private PlayerScore player;
     private bool gameEnded = false;
+    private int currScore = 0;
 
     private void Start()
     {
-        // Always hide the win message when the level starts.
-        if (winText != null)
+        player = FindFirstObjectByType<PlayerScore>();
+
+        if (ScoreText != null)
         {
-            winText.gameObject.SetActive(false);
+            ScoreText.gameObject.SetActive(true);
+            ScoreText.text = "Score: 0";
         }
     }
 
     private void Update()
     {
-        if (gameEnded)
+        if (gameEnded || player == null)
             return;
 
-        PlayerScore player =
-            FindFirstObjectByType<PlayerScore>();
+        if (player.score != currScore)
+        {
+            currScore = player.score;
 
-        if (player == null)
-            return;
+            if (ScoreText != null)
+            {
+                ScoreText.text = "Score: " + currScore;
+            }
+        }
 
         if (player.transform.position.y <= loseHeight)
         {
@@ -43,29 +55,15 @@ public class LevelManager : MonoBehaviour
             return;
 
         gameEnded = true;
-
-        Debug.Log("LEVEL WON!");
-
-        // Show the win message.
-        if (winText != null)
-        {
-            winText.gameObject.SetActive(true);
-        }
-
-        // Freeze the entire game.
-        Time.timeScale = 0f;
+        SceneManager.LoadScene(winScene);
     }
 
     private void LoseLevel()
     {
+        if (gameEnded)
+            return;
+
         gameEnded = true;
-
-        Debug.Log("LEVEL LOST!");
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        SceneManager.LoadScene(loseScene);
     }
 }

@@ -19,27 +19,10 @@ public class PlatformScoreTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(
-            "Platform trigger entered by: " +
-            other.gameObject.name
-        );
-
         PlayerScore playerScore =
             other.GetComponentInParent<PlayerScore>();
 
-        if (playerScore == null)
-        {
-            Debug.Log(
-                "Object does not have a PlayerScore component."
-            );
-
-            return;
-        }
-
-        Debug.Log(
-            "PlayerScore found. Calling PlayerSteppedOn on: " +
-            platform.gameObject.name
-        );
+        if (playerScore == null) return;
 
         platform.PlayerSteppedOn(playerScore);
     }

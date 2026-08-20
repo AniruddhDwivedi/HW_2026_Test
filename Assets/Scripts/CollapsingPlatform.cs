@@ -36,55 +36,41 @@ public class CollapsingPlatform : MonoBehaviour
 
     private void Awake()
     {
-        Collider[] colliders = GetComponentsInChildren<Collider>();
+        Collider[] colliders =
+            GetComponentsInChildren<Collider>();
 
         foreach (Collider col in colliders)
         {
             if (col.isTrigger)
-            {
                 scoreTrigger = col;
-            }
             else
-            {
                 platformCollider = col;
-            }
         }
 
-        if (platformCollider == null)
+        if (platformCollider != null)
+        {
+            finalScale =
+                platformCollider.transform.localScale;
+        }
+        else
         {
             Debug.LogError(
-                "CollapsingPlatform: Could not find solid platform collider!",
+                "CollapsingPlatform: No solid collider found!",
                 this
             );
-            return;
         }
-
-        if (scoreTrigger == null)
-        {
-            Debug.LogError(
-                "CollapsingPlatform: Could not find trigger collider!",
-                this
-            );
-            return;
-        }
-
-        finalScale = platformCollider.transform.localScale;
     }
 
     private void Start()
     {
-        Debug.Log(
-            gameObject.name +
-            " started. Starting platform: " +
-            isStartingPlatform
-        );
-
         if (isStartingPlatform)
         {
+            // Starting platform is already fully grown.
             ActivatePlatform();
         }
         else
         {
+            // Every generated platform grows into existence.
             StartCoroutine(GrowPlatform());
         }
     }
@@ -130,42 +116,26 @@ public class CollapsingPlatform : MonoBehaviour
         platformCollider.enabled = true;
         scoreTrigger.enabled = true;
 
+        // The platform's death timer starts when it becomes usable.
         float lifetime =
             Random.Range(minLifetime, maxLifetime);
-
-        Debug.Log(
-            gameObject.name +
-            " is now active. Lifetime: " +
-            lifetime
-        );
 
         Destroy(gameObject, lifetime);
     }
 
     public void PlayerSteppedOn(PlayerScore playerScore)
     {
-        Debug.Log(
-            "Player stepped on " +
-            gameObject.name
-        );
+        Debug.Log("Player stepped on " + gameObject.name);
 
         if (!isActive)
         {
-            Debug.Log(
-                gameObject.name +
-                " isn't active yet."
-            );
-
+            Debug.Log("Platform isn't active yet.");
             return;
         }
 
         if (playerHasScored)
         {
-            Debug.Log(
-                gameObject.name +
-                " has already been scored."
-            );
-
+            Debug.Log("Platform has already been scored.");
             return;
         }
 
@@ -173,36 +143,13 @@ public class CollapsingPlatform : MonoBehaviour
 
         playerScore.AddScore();
 
-        Debug.Log(
-            "Attempting to spawn child from " +
-            gameObject.name
-        );
-
         SpawnNextPlatform();
     }
 
     private void SpawnNextPlatform()
     {
         if (hasSpawnedChild)
-        {
-            Debug.Log(
-                gameObject.name +
-                " has already spawned a child."
-            );
-
             return;
-        }
-
-        if (platformPrefab == null)
-        {
-            Debug.LogError(
-                "PLATFORM PREFAB IS NOT ASSIGNED on " +
-                gameObject.name,
-                this
-            );
-
-            return;
-        }
 
         hasSpawnedChild = true;
 
@@ -225,23 +172,9 @@ public class CollapsingPlatform : MonoBehaviour
             }
         }
 
-        if (validDirections.Count == 0)
-        {
-            Debug.LogError(
-                "No valid spawn directions for " +
-                gameObject.name
-            );
-
-            hasSpawnedChild = false;
-            return;
-        }
-
         Vector3 chosenDirection =
             validDirections[
-                Random.Range(
-                    0,
-                    validDirections.Count
-                )
+                Random.Range(0, validDirections.Count)
             ];
 
         Vector3 spawnPosition =
@@ -249,10 +182,7 @@ public class CollapsingPlatform : MonoBehaviour
             chosenDirection * platformSize;
 
         Debug.Log(
-            "Spawning child at " +
-            spawnPosition +
-            " in direction " +
-            chosenDirection
+            "Spawning child platform at " + spawnPosition
         );
 
         GameObject child =
@@ -262,41 +192,13 @@ public class CollapsingPlatform : MonoBehaviour
                 transform.rotation
             );
 
-        child.name = "Platform";
-
-
-        if (child == null)
-        {
-            Debug.LogError(
-                "Instantiate returned null!"
-            );
-
-            return;
-        }
-
         CollapsingPlatform childPlatform =
             child.GetComponent<CollapsingPlatform>();
 
-        if (childPlatform == null)
+        if (childPlatform != null)
         {
-            Debug.LogError(
-                "Spawned object does not contain " +
-                "CollapsingPlatform!",
-                child
-            );
-
-            return;
+            childPlatform.isStartingPlatform = false;
+            childPlatform.SetParentDirection(-chosenDirection);
         }
-
-        childPlatform.isStartingPlatform = false;
-
-        childPlatform.SetParentDirection(
-            -chosenDirection
-        );
-
-        Debug.Log(
-            "Successfully created child: " +
-            child.name
-        );
     }
 }
