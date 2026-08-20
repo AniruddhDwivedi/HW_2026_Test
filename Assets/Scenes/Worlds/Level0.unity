@@ -1732,7 +1732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7506663052675609020, guid: c849000e861e5a74da95637300040e93, type: 3}
       propertyPath: winScore
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8801239825266864594, guid: c849000e861e5a74da95637300040e93, type: 3}
       propertyPath: m_Name

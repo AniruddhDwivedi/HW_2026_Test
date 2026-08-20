@@ -314,6 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   speed: 3
   rotationSpeed: 10
+  dustParticles: {fileID: 0}
 --- !u!114 &9010857724971981172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerScore
   score: 0
-  winScore: 10
+  winScore: 50
 --- !u!1001 &2811879691465355199
 PrefabInstance:
   m_ObjectHideFlags: 0
