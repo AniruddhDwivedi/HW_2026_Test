@@ -8,6 +8,12 @@ Soundtrack for the game has been sourced from Nintendo's 2001 video game Luigi's
 ## Running the game
 To run the game, simply download and extract the latest build of the game and run `HW_2026_Test.exe`, for any concerns, please raise an issue.
 
+Controls - 
+           
+           Movement: WASD/Arrow Keys
+           Camera orientation: Mouse Look
+           Pause: Escape or P
+
 ## Screenshots
 Main Menu
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/fa73fa95-8a29-46c2-b74a-f4ae08b5735b" />
